@@ -10,7 +10,7 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
-  int _currentIndex = 2;
+  int _currentIndex = 1;
   List<Widget> pages = [
     ChatView(),
     AddressBookView(),
