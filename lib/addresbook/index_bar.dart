@@ -29,6 +29,10 @@ class _IndexBarState extends State<IndexBar> {
   double _indicatorY = 0.0;
   String _indicatorText = 'A';
   bool _indicatorHidden = true;
+  Color _textColor = Colors.black;
+  Color _selectColor = Colors.white;
+  Color _backColor = Color.fromRGBO(1, 1, 1, 0);
+  Color _selectBackColor = Colors.greenAccent;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,9 @@ class _IndexBarState extends State<IndexBar> {
                 child: Text(
                   INDEX_WORDS[i],
                   style: TextStyle(fontSize: 10),
-                ))),
+                )
+            )
+        ),
       );
     }
     return Positioned(
@@ -60,6 +66,7 @@ class _IndexBarState extends State<IndexBar> {
                 Text(_indicatorText,style: TextStyle(
                   fontSize: 35,
                   color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
                 )
               ],

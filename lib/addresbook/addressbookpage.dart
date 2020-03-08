@@ -11,6 +11,14 @@ class AddressBookView extends StatefulWidget {
 
 class _AddressBookViewState extends State<AddressBookView> {
   final List<Contacts> _listDatas = [];
+  // 控制ListView滚动
+  ScrollController _scrollController;
+  var _totalOffSet = 0.0;
+  // 保存每个cell的位置
+  final Map _groupOffsetMap = { // 搜索和搜藏默认为0
+    INDEX_WORDS[0] : 0.0,
+    INDEX_WORDS[1] : 0.0,
+  };
 
   @override
   void initState() {
@@ -19,6 +27,24 @@ class _AddressBookViewState extends State<AddressBookView> {
     _listDatas.sort((Contacts a, Contacts b) {
       return a.indexLetter.compareTo(b.indexLetter); // 首字母排序
     });
+    _scrollController = ScrollController();
+    //创建字母对应OffSet的Map
+    var _groupOffSet = 54.0 * 4;
+    _totalOffSet += _groupOffSet;
+    for (int i = 0; i < _listDatas.length; i++){
+      if(i < 1){
+        _groupOffsetMap.addAll({_listDatas[i].indexLetter : _groupOffSet});
+        _groupOffSet += 84.0;
+        _totalOffSet += 84.0;
+      }else if (_listDatas[i].indexLetter == _listDatas[i - 1].indexLetter){// 不需要显示分区头
+        _groupOffSet += 54.0;
+        _totalOffSet += 54.0;
+      }else{
+        _groupOffsetMap.addAll({_listDatas[i].indexLetter : _groupOffSet});
+        _groupOffSet += 84.0;
+        _totalOffSet += 84.0;
+      }
+    }
   }
 
   final List<Contacts> _headerData = [
@@ -58,13 +84,19 @@ class _AddressBookViewState extends State<AddressBookView> {
           Container(
             color: ThemeColor,
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: _listDatas.length + _headerData.length,
               itemBuilder: _cellForRow,
             ),
           ),
           IndexBar(
             indexBarCallBack: (String letter){
-print(letter);
+              if(_groupOffsetMap[letter] != null){
+                _scrollController.animateTo(
+                    _groupOffsetMap[letter],
+                    duration: Duration(milliseconds: 10),
+                    curve: Curves.easeIn);
+              }
             },
           ),// 索引条
         ],
