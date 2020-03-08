@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter WebChat',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,// 暖色系 标题自动变为黑色，冷色系 标题自动变为白色
         highlightColor: Color.fromRGBO(1, 0, 0, 0),
         splashColor: Color.fromRGBO(1, 0, 0, 0),
       ),

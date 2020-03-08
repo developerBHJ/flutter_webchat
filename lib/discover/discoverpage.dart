@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../const.dart';
 import 'discover_cell.dart';
+
 
 class DiscoverView extends StatefulWidget {
   @override
@@ -7,7 +9,6 @@ class DiscoverView extends StatefulWidget {
 }
 
 class _DiscoverViewState extends State<DiscoverView> {
-  final Color _themeColor = Color.fromRGBO(220, 220, 220, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,11 @@ class _DiscoverViewState extends State<DiscoverView> {
       appBar: AppBar(
         title: Text('发现',style: TextStyle(color: Colors.black),),
         centerTitle: true,
-        backgroundColor: _themeColor,
+        backgroundColor: ThemeColor,
         elevation: 0.0,
       ),
       body: Container(
-        color: _themeColor,
+        color: ThemeColor,
         height: 800,
         child: ListView(
           children: <Widget>[

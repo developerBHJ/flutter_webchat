@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webchat/discover/discover_cell.dart';
+import '../const.dart';
 import 'personal_center.dart';
 
 class MineView extends StatefulWidget {
@@ -8,7 +9,7 @@ class MineView extends StatefulWidget {
 }
 
 class _MineViewState extends State<MineView> {
-  final Color _themeColor = Color.fromRGBO(220, 220, 220, 1);
+
   final String _userName = '曲洛枫';
   final String _userNum = '微信号: bhjmoshangsao';
 
@@ -19,7 +20,7 @@ class _MineViewState extends State<MineView> {
         child: Stack(
           children: <Widget>[
             Container(
-              color: _themeColor,
+              color: ThemeColor,
               child: MediaQuery.removePadding(
                 context: context,
                 removeTop: true,
