@@ -9,7 +9,8 @@ class AddressBookView extends StatefulWidget {
   _AddressBookViewState createState() => _AddressBookViewState();
 }
 
-class _AddressBookViewState extends State<AddressBookView> {
+class _AddressBookViewState extends State<AddressBookView>
+with AutomaticKeepAliveClientMixin<AddressBookView>{
   final List<Contacts> _listDatas = [];
   // 控制ListView滚动
   ScrollController _scrollController;
@@ -23,6 +24,8 @@ class _AddressBookViewState extends State<AddressBookView> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
+
     _listDatas..addAll(contacts_list)..addAll(contacts_list);
     _listDatas.sort((Contacts a, Contacts b) {
       return a.indexLetter.compareTo(b.indexLetter); // 首字母排序
@@ -127,6 +130,10 @@ class _AddressBookViewState extends State<AddressBookView> {
       groupTitle: _listDatas[index - 4].indexLetter,
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class ContactsCell extends StatelessWidget {

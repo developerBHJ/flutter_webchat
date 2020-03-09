@@ -10,7 +10,10 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
+  final PageController _pageController = PageController(
+    initialPage: 0,
+  );
   List<Widget> pages = [
     ChatView(),
     AddressBookView(),
@@ -77,13 +80,25 @@ class _RootViewState extends State<RootView> {
           onTap: (int index) {
             _currentIndex = index;
             setState(() {});
+            _pageController.jumpToPage(index);
           },
           selectedFontSize: 12,// 选中字体
           type: BottomNavigationBarType.fixed,
           fixedColor: Colors.green,
           currentIndex: _currentIndex,
         ),
-        body: pages[_currentIndex],
+        body:
+//        pages[_currentIndex]
+        PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          children: <Widget>[
+            ChatView(),
+            AddressBookView(),
+            DiscoverView(),
+            MineView(),
+          ],
+        ),
       ),
     );
   }
