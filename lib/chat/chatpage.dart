@@ -3,6 +3,7 @@ import 'package:flutter_webchat/const.dart';
 import 'dart:convert';
 import 'chat_data.dart';
 import 'package:http/http.dart' as http;
+import 'search_bar.dart';
 
 /* 混入（Mixins）
 * 用来给类增加功能。with 混入一个或多个mixin
@@ -57,8 +58,44 @@ class _ChatViewState extends State<ChatView>
     }
   }
 
+  Widget _buildItemForRow(BuildContext context,int index){
+    if(index == 0){
+      return SearchCell(datas: _datas,);
+    }
+    return ListTile(
+      title: Text(
+        _datas[index - 1].name,
+        style: TextStyle(
+            color: Colors.black ,
+            fontSize: 15) ,
+      ) ,
+      subtitle: Container(
+        height: 20,
+        width: 20,
+        child: Text(
+          _datas[index - 1].message,
+          style: TextStyle(
+              color: Colors.grey,
+              fontSize: 13
+          ),
+          overflow:
+          TextOverflow.ellipsis,
+        ),
+      ),
+      leading: Container(
+        width: 70,
+        height: 70,
+        decoration: BoxDecoration(
+          image: DecorationImage(image: NetworkImage(_datas[index - 1].imageUrl)),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('微信'),
@@ -80,37 +117,9 @@ class _ChatViewState extends State<ChatView>
             ? Center(
           child: Text('Loading..'),
         ) : ListView.builder(
-            itemBuilder: (BuildContext context, int index){
-              return ListTile(
-                title: Text(
-                  _datas[index].name ,
-                  style: TextStyle(
-                      color: Colors.black ,
-                      fontSize: 15) ,
-                ) ,
-                subtitle: Container(
-                  height: 20,
-                  width: 20,
-                  child: Text(
-                    _datas[index].message,
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13
-                    ),
-                    overflow:
-                    TextOverflow.ellipsis,
-                  ),
-                ),
-                leading: Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: NetworkImage(_datas[index].imageUrl)),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              );
-            }),
+          itemCount: _datas.length + 1,
+          itemBuilder: _buildItemForRow,
+        ),
       ),
     );
   }
